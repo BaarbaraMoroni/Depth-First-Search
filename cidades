@@ -1,0 +1,44 @@
+<?php
+$graph = [
+    'Oradea' => ['Zerind', 'Sibiu'],
+    'Zerind' => ['Oradea', 'Arad'],
+    'Arad' => ['Zerind', 'Sibiu', 'Timisoara'],
+    'Timisoara' => ['Arad', 'Lugoj'],
+    'Lugoj' => ['Timisoara', 'Mehadia'],
+    'Mehadia' => ['Lugoj', 'Dobreta'],
+    'Dobreta' => ['Mehadia', 'Craiova'],
+    'Sibiu' => ['Oradea', 'Arad', 'RimnicuVilcea', 'Fagaras'],
+    'Fagaras' => ['Sibiu', 'Bucharest'],
+    'RimnicuVilcea' => ['Sibiu', 'Craiova', 'Pitesti'],
+    'Craiova' => ['Dobreta', 'RimnicuVilcea', 'Pitesti'],
+    'Pitesti' => ['RimnicuVilcea', 'Craiova', 'Bucharest'],
+    'Bucharest' => ['Fagaras', 'Pitesti', 'Giurgiu', 'Urziceni'],
+    'Giurgiu' => ['Bucharest'],
+    'Urziceni' => ['Bucharest', 'Vaslui', 'Hirsova'],
+    'Hirsova' => ['Urziceni', 'Eforie'],
+    'Eforie' => ['Hirsova'],
+    'Vaslui' => ['Urziceni', 'Iasi'],
+    'Iasi' => ['Vaslui', 'Neamt'],
+    'Neamt' => ['Iasi']
+];
+
+$visited = [];
+
+function dfs($visited, $graph, $initial_state, $final_state)
+{
+    if (!in_array($initial_state, $visited)) {
+        echo $initial_state . "\n";
+        if ($initial_state == $final_state) {
+            exit();
+        }
+        $visited[] = $initial_state;
+        foreach ($graph[$initial_state] as $neighbor) {
+            dfs($visited, $graph, $neighbor, $final_state);
+        }
+    }
+}
+
+// Código principal
+echo "Following is the Depth-First Search:\n";
+dfs($visited, $graph, 'Oradea', 'Timisoara');
+?>
